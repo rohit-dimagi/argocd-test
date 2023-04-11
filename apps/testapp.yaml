@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+spec:
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      name: '{{name}}-guestbook'
+  project: default
+  source:
+    repoURL: https://github.com/rohit-dimagi/argocd-test.git
+    targetRevision: HEAD
+    path: helm-guestbook
+  destination:
+    server: '{{server}}'
+    namespace: guestbook
