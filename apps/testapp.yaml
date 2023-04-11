@@ -1,19 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: guestbook
   namespace: argocd
 spec:
   generators:
-  - clusters: {}
+  - clusters: {} 
   template:
     metadata:
       name: '{{name}}-guestbook'
-  project: default
-  source:
-    repoURL: https://github.com/rohit-dimagi/argocd-test.git
-    targetRevision: HEAD
-    path: helm-guestbook
-  destination:
-    server: '{{server}}'
-    namespace: guestbook
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/rohit-dimagi/argocd-test/
+        targetRevision: HEAD
+        path: charts/helm-guestbook
+        helm:
+          releaseName: helm-guestbook
+          parameters:
+            - name: cluster
+              value: '{{ name }}'
+          valueFiles:
+            - ../data/account-svc/values-production.yaml
+      destination:
+        name: '{{ name }}'
+        namespace: services
+      syncPolicy:
+        automated:
+          prune: true
+      destination:
+        server: '{{server}}'
+        namespace: guestbook
