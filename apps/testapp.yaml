@@ -21,7 +21,7 @@ spec:
             - name: cluster
               value: '{{ name }}'
           valueFiles:
-            - ../../data/account-svc/values-production.yaml
+            - ../../data/guestbook/values-production.yaml
       destination:
         name: '{{ name }}'
         namespace: services
