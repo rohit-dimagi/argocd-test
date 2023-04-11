@@ -14,9 +14,9 @@ spec:
       source:
         repoURL: https://github.com/rohit-dimagi/argocd-test/
         targetRevision: HEAD
-        path: charts/helm-guestbook
+        path: charts/guestbook
         helm:
-          releaseName: helm-guestbook
+          releaseName: guestbook
           parameters:
             - name: cluster
               value: '{{ name }}'
